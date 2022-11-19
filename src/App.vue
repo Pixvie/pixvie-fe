@@ -1,45 +1,24 @@
 <template>
-  <div class="container"></div>
+  <router-view></router-view>
 </template>
 
-<script setup>
-import panzoom from "panzoom";
-import { onMounted } from "vue";
-
-onMounted(() => {
-  const el = document.querySelector(".container");
-  panzoom(el, {
-    maxZoom: 2,
-    minZoom: 0.2,
-    smoothScroll: true,
-    bounds: true,
-    boundsPadding: 0.1,
-    zoomDoubleClickSpeed: 1,
-  });
-});
-</script>
+<script setup></script>
 
 <style lang="scss">
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  background-color: #6ba292;
   width: 100vw;
   height: 100vh;
-
   overflow: hidden;
-}
-
-.container {
-  background-color: #2c3e50;
-  width: 2000px;
-  height: 2000px;
+  font-family: "Roboto", sans-serif;
 }
 </style>
