@@ -16,8 +16,18 @@
 
 <script setup>
 import panzoom from "panzoom";
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
+import io from "socket.io-client";
+
+const socket = ref(null);
 // import PixelsContainer from "@/components/PixelsContainer.vue";
+onMounted(() => {
+  socket.value = io("http://localhost:3000"); // <div>
+  socket.value.on("DRAWED_PIXEL", ({ x, y, color }) => {
+    console.log("Mesaj Geldi");
+    drawPixel(x, y, color, false);
+  });
+});
 
 onMounted(() => {
   const el = document.querySelector("#canvas");
@@ -44,7 +54,7 @@ onMounted(() => {
 
   for (let i = 0; i < 2000; i += 10) {
     for (let j = 0; j < 2000; j += 10) {
-      drawPixel(i, j, "#fff");
+      drawPixel(i, j, "#fff", false);
     }
   }
 });
@@ -64,12 +74,13 @@ function getCoords(e) {
 }
 
 // Draw a pixel on canvas
-function drawPixel(x, y, color) {
+function drawPixel(x, y, color, flag = true) {
   const ctx = document.getElementById("canvas").getContext("2d");
   ctx.clearRect(x, y, 10, 10);
 
   ctx.fillStyle = color;
   ctx.fillRect(x, y, 9, 9);
+  if (flag) socket.value.emit("DRAW_PIXEL", { x, y, color });
 }
 
 function makeItActive(x, y) {
