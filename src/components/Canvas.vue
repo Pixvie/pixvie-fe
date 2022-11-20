@@ -22,7 +22,7 @@ import io from "socket.io-client";
 const socket = ref(null);
 // import PixelsContainer from "@/components/PixelsContainer.vue";
 onMounted(() => {
-  socket.value = io("http://localhost:3000"); // <div>
+  socket.value = io("http://35.242.209.225:3000/"); // <div>
   socket.value.on("DRAWED_PIXEL", ({ x, y, color }) => {
     console.log("Mesaj Geldi");
     drawPixel(x, y, color, false);
