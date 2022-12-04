@@ -22,7 +22,7 @@ import io from "socket.io-client";
 const socket = ref(null);
 // import PixelsContainer from "@/components/PixelsContainer.vue";
 onMounted(() => {
-  socket.value = io("http://35.242.209.225:3000/"); //
+  socket.value = io(process.env.VUE_APP_BASE_HOST); //
   socket.value.on("DRAWED_PIXEL", ({ x, y, color }) => {
     drawPixel(x, y, color, false);
   });
@@ -51,8 +51,8 @@ onMounted(async () => {
     zoomSpeed: 0.1,
   });
 
-  const data = await fetch("http://35.242.209.225:3000/api/board").then((res) =>
-    res.json()
+  const data = await fetch(`${process.env.VUE_APP_BASE_HOST}/api/board`).then(
+    (res) => res.json()
   );
 
   for (let i = 0; i < 2000; i += 10) {
@@ -86,17 +86,7 @@ async function drawPixel(x, y, color, flag = true) {
 
   ctx.fillStyle = color;
   ctx.fillRect(x, y, 9, 9);
-  if (flag) {
-    socket.value.emit("DRAW_PIXEL", { x, y, color });
-    console.log(x, y);
-    await fetch("http://35.242.209.225:3000/api/board", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ x, y, color }),
-    });
-  }
+  if (flag) socket.value.emit("DRAW_PIXEL", { x, y, color });
 }
 
 function makeItActive(x, y) {
