@@ -51,8 +51,8 @@ onMounted(async () => {
     zoomSpeed: 0.1,
   });
 
-  const data = await fetch("http://35.242.209.225:3000//api/board").then(
-    (res) => res.json()
+  const data = await fetch("http://35.242.209.225:3000/api/board").then((res) =>
+    res.json()
   );
 
   for (let i = 0; i < 2000; i += 10) {
@@ -89,7 +89,7 @@ async function drawPixel(x, y, color, flag = true) {
   if (flag) {
     socket.value.emit("DRAW_PIXEL", { x, y, color });
     console.log(x, y);
-    await fetch("http://35.242.209.225:3000//api/board", {
+    await fetch("http://35.242.209.225:3000/api/board", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
