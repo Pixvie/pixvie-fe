@@ -22,14 +22,13 @@ import io from "socket.io-client";
 const socket = ref(null);
 // import PixelsContainer from "@/components/PixelsContainer.vue";
 onMounted(() => {
-  socket.value = io("http://35.242.209.225:3000/"); // <div>
+  socket.value = io("https://pixvie.tech:3000"); //
   socket.value.on("DRAWED_PIXEL", ({ x, y, color }) => {
-    console.log("Mesaj Geldi");
     drawPixel(x, y, color, false);
   });
 });
 
-onMounted(() => {
+onMounted(async () => {
   const el = document.querySelector("#canvas");
   panzoom(el, {
     maxZoom: 3,
@@ -52,10 +51,18 @@ onMounted(() => {
     zoomSpeed: 0.1,
   });
 
+  const data = await fetch("https://pixvie.tech:3000/api/board").then((res) =>
+    res.json()
+  );
+
   for (let i = 0; i < 2000; i += 10) {
     for (let j = 0; j < 2000; j += 10) {
       drawPixel(i, j, "#fff", false);
     }
+  }
+
+  for (let i = 0; i < data.length; i++) {
+    drawPixel(data[i].pos[0], data[i].pos[1], data[i].color, false);
   }
 });
 
@@ -63,7 +70,6 @@ let x,
   y = 0;
 
 function getCoords(e) {
-  console.log(e);
   x = e.offsetX;
   y = e.offsetY;
   x = Math.round((x - 10) / 10) * 10;
@@ -74,13 +80,23 @@ function getCoords(e) {
 }
 
 // Draw a pixel on canvas
-function drawPixel(x, y, color, flag = true) {
+async function drawPixel(x, y, color, flag = true) {
   const ctx = document.getElementById("canvas").getContext("2d");
   ctx.clearRect(x, y, 10, 10);
 
   ctx.fillStyle = color;
   ctx.fillRect(x, y, 9, 9);
-  if (flag) socket.value.emit("DRAW_PIXEL", { x, y, color });
+  if (flag) {
+    socket.value.emit("DRAW_PIXEL", { x, y, color });
+    console.log(x, y);
+    await fetch("https://pixvie.tech:3000/api/board", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ x, y, color }),
+    });
+  }
 }
 
 function makeItActive(x, y) {
