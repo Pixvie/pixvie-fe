@@ -1,9 +1,5 @@
 <template>
-  <canvas
-    id="canvas"
-    width="2000"
-    height="2000"
-  ></canvas>
+  <canvas id="canvas" width="2000" height="2000"></canvas>
   <div
     class="container"
     id="container"
