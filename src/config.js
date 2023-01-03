@@ -1,2 +1,2 @@
-const hostname = 'http://35.242.209.225:3000';
+const hostname = 'https://pixvie.tech/api/board';
 export default hostname;
