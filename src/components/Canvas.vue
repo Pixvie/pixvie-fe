@@ -23,7 +23,7 @@ import hostname from "../config.js";
 const socket = ref(null);
 // import PixelsContainer from "@/components/PixelsContainer.vue";
 onMounted(() => {
-  socket.value = io(hostname); //
+  socket.value = io("/app"); //
   socket.value.on("DRAWED_PIXEL", ({ x, y, color }) => {
     drawPixel(x, y, color, false);
   });
