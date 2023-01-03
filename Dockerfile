@@ -2,7 +2,7 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 COPY . .
-RUN npm install && npm run build
+RUN npm install && npm run dev
 
 FROM nginx:1.23-alpine
 WORKDIR /app
