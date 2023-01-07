@@ -5,8 +5,10 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Build.'
-                sh 'npm install'
-                sh 'npm run build'
+                sh 'docker rm pixvie-frontend --force'
+                sh 'docker build -t pixvie-fe .'
+                sh 'docker run --name pixvie-frontend -d -p 80:80 pixvie-fe'
+                
             }
         }
     }

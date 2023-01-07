@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: pixvie-fe-deployment
+    labels:
+        app: pixvie-fe
+spec:
+    replicas: 2
+    selector:
+        matchLabels:
+            app: pixvie-fe
+    template:
+        metadata:
+            labels:
+                app: pixvie-fe
+        spec:
+            containers:
+                - name: pixvie-fe
+                  image: emrullahcirit/pixvie-fe:latest
+                  ports:
+                      - containerPort: 80
+                  env:
+                      - name: VUE_APP_BASE_HOST
+                        valueFrom:
+                            secretKeyRef:
+                                name: fe-secret
+                                key: VUE_APP_BASE_HOST
