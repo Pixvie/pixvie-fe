@@ -1,5 +1,9 @@
 <template>
-  <canvas id="canvas" width="2000" height="2000"></canvas>
+  <canvas
+    id="canvas"
+    width="2000"
+    height="2000"
+  ></canvas>
   <div
     class="container"
     id="container"
@@ -24,9 +28,9 @@ const socket = ref(null);
 // import PixelsContainer from "@/components/PixelsContainer.vue";
 onMounted(() => {
   socket.value = io("https://pixvie.tech", {
-                      path: "/app/",
-                      rejectUnauthorized: false
-                  }); //
+    path: "/app/socket.io/",
+    rejectUnauthorized: false,
+  }); //
   socket.value.on("DRAWED_PIXEL", ({ x, y, color }) => {
     drawPixel(x, y, color, false);
   });
@@ -55,9 +59,7 @@ onMounted(async () => {
     zoomSpeed: 0.1,
   });
 
-  const data = await fetch(`${hostname}/api/board`).then(
-    (res) => res.json()
-  );
+  const data = await fetch(`${hostname}/api/board`).then((res) => res.json());
 
   for (let i = 0; i < 2000; i += 10) {
     for (let j = 0; j < 2000; j += 10) {
