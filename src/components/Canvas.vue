@@ -24,7 +24,7 @@ const socket = ref(null);
 // import PixelsContainer from "@/components/PixelsContainer.vue";
 onMounted(() => {
   socket.value = io("https://pixvie.tech", {
-    path: "/app/socket.io/",
+    path: "/api/socket.io/",
     rejectUnauthorized: false,
   }); //
   socket.value.on("DRAWED_PIXEL", ({ x, y, color }) => {
