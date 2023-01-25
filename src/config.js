@@ -1,2 +1,2 @@
-const hostname = "https://pixvie.tech/app";
+const hostname = "https://pixvie.tech/api";
 export default hostname;
