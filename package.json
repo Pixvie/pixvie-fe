@@ -12,6 +12,7 @@
     "panzoom": "^9.4.3",
     "socket.io-client": "^4.5.3",
     "vue": "^3.2.13",
+    "vue-final-modal": "^3.4.11",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
   },

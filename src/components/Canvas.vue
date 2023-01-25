@@ -12,16 +12,18 @@
       class="selected-item-img"
     />
   </div>
+  <LoginModal @successLogin="successLogin" v-model="showModal"></LoginModal>
 </template>
 
 <script setup>
-import panzoom from "panzoom";
+import LoginModal from "@/components/Modals/LoginModal.vue";
 import { ref, onMounted } from "vue";
+import panzoom from "panzoom";
 import io from "socket.io-client";
 import hostname from "../config.js";
 
 const socket = ref(null);
-// import PixelsContainer from "@/components/PixelsContainer.vue";
+const showModal = ref(true);
 onMounted(() => {
   socket.value = io("https://pixvie.tech", {
     path: "/api/socket.io/",
@@ -76,9 +78,13 @@ function getCoords(e) {
   y = e.offsetY;
   x = Math.round((x - 10) / 10) * 10;
   y = Math.round((y - 10) / 10) * 10;
-  var coors = "Coordinates: (" + x + "," + y + ")";
-  console.log(coors);
+  // var coors = "Coordinates: (" + x + "," + y + ")";
+  // console.log(coors);
   makeItActive(x, y);
+}
+
+function successLogin() {
+  showModal.value = false;
 }
 
 // Draw a pixel on canvas
