@@ -24,9 +24,11 @@
           </div>
           <span
             >{{ loginStatus ? "Not a member yet ?" : "Already a member ?" }}
-            <span @click="loginStatus = !loginStatus" class="activeSpan">{{
-              loginStatus ? "Sign up." : "Sign in."
-            }}</span></span
+            <span
+              @click="store.commit('changeModalStatus')"
+              class="activeSpan"
+              >{{ loginStatus ? "Sign up." : "Sign in." }}</span
+            ></span
           >
         </div>
         <div class="modalContainer--modal-body-right">Join anonymous</div>
@@ -37,12 +39,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
 // const emit = defineEmits(["successLogin"]);
 
-const loginStatus = ref(true);
+const loginStatus = computed(() => store.state.loginModalStatus);
 const username = ref("");
 const email = ref("");
 const password = ref("");
@@ -65,20 +67,7 @@ async function signup() {
     password: password.value,
   };
 
-  const res = await fetch("https://pixvie.tech/api/auth/register", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
-  const data = await res.json();
-
-  if (res.status === 201) {
-    loginStatus.value = true;
-  } else {
-    console.log(data);
-  }
+  store.dispatch("signup", user);
 }
 </script>
 
