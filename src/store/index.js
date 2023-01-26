@@ -24,6 +24,11 @@ export default createStore({
     changeModalStatus(state) {
       state.loginModalStatus = !state.loginModalStatus;
     },
+    logout(state, payload) {
+      state.user.logged = payload.logged;
+      state.user.username = payload.username;
+      state.user.id = payload.id;
+    },
   },
   actions: {
     async signin({ commit }, user) {
@@ -72,6 +77,20 @@ export default createStore({
         }
       } catch (error) {
         toast.warn(error.response.data.message, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+      }
+    },
+    async logout({ commit }) {
+      try {
+        const { status } = await axios.get(
+          "https://pixvie.tech/api/auth/logout"
+        );
+        if (status === 200) {
+          commit("logout", { username: null, id: null, logged: false });
+        }
+      } catch (error) {
+        toast.error(error.response.data.message, {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
       }
