@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^1.2.4",
     "core-js": "^3.8.3",
     "panzoom": "^9.4.3",
     "socket.io-client": "^4.5.3",

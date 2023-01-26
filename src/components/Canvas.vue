@@ -12,18 +12,20 @@
       class="selected-item-img"
     />
   </div>
-  <LoginModal @successLogin="successLogin" v-model="showModal"></LoginModal>
+  <LoginModal v-model="showModal"></LoginModal>
 </template>
 
 <script setup>
 import LoginModal from "@/components/Modals/LoginModal.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
+import { useStore } from "vuex";
 import panzoom from "panzoom";
 import io from "socket.io-client";
 import hostname from "../config.js";
 
+const store = useStore();
+const showModal = computed(() => !store.state.user.logged);
 const socket = ref(null);
-const showModal = ref(true);
 onMounted(() => {
   socket.value = io("https://pixvie.tech", {
     path: "/api/socket.io/",
@@ -82,11 +84,6 @@ function getCoords(e) {
   // console.log(coors);
   makeItActive(x, y);
 }
-
-function successLogin() {
-  showModal.value = false;
-}
-
 // Draw a pixel on canvas
 async function drawPixel(x, y, color, flag = true) {
   const ctx = document.getElementById("canvas").getContext("2d");

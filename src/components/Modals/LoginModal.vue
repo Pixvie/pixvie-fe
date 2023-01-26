@@ -1,81 +1,62 @@
 <template>
-  <vue-final-modal :click-to-close="false" :ssr="false">
+  <vue-final-modal
+    :click-to-close="false"
+    :ssr="false"
+    classes="modalWrapper"
+    content-class="modalContent"
+  >
     <div class="modalContainer">
-      <div class="modal">
-        <h2 class="modal-header">Welcome to Pixvie</h2>
-        <div class="modal-body">
-          <div class="modal-body-left">
-            <div v-if="loginStatus" class="modal-login">
-              <h3>Log in</h3>
-              <input type="email" v-model="email" placeholder="Email" />
-              <input
-                type="password"
-                v-model="password"
-                placeholder="Password"
-              />
-              <button @click="login" type="submit">Log in</button>
-            </div>
-            <div v-else class="modal-login">
-              <h3>Register</h3>
-              <input type="text" v-model="username" placeholder="Username" />
-              <input type="email" v-model="email" placeholder="Email" />
-              <input
-                type="password"
-                v-model="password"
-                placeholder="Password"
-              />
-              <button @click="register" type="submit">Sign up</button>
-            </div>
-            <span>
-              <button @click="loginStatus = !loginStatus">
-                {{ loginStatus ? "Register" : "Log in" }}
-              </button>
-            </span>
-          </div>
-          <div>Join anonymous</div>
-        </div>
-        <div class="modal-footer">2023@Pixvie</div>
+      <div class="modalContainer--modal-header">
+        <h2>Welcome To Pixvie 🧑‍🚒</h2>
       </div>
+      <div class="modalContainer--modal-body">
+        <div class="modalContainer--modal-body-left">
+          <div v-if="loginStatus" class="loginForm">
+            <input v-model="email" type="email" placeholder="Email" />
+            <input v-model="password" type="password" placeholder="Password" />
+            <button @click="signin" type="button">Login</button>
+          </div>
+          <div class="registerForm" v-else>
+            <input v-model="username" type="text" placeholder="Username" />
+            <input v-model="email" type="email" placeholder="Email" />
+            <input v-model="password" type="password" placeholder="Password" />
+            <button @click="signup" type="button">Register</button>
+          </div>
+          <span
+            >{{ loginStatus ? "Not a member yet ?" : "Already a member ?" }}
+            <span @click="loginStatus = !loginStatus" class="activeSpan">{{
+              loginStatus ? "Sign up." : "Sign in."
+            }}</span></span
+          >
+        </div>
+        <div class="modalContainer--modal-body-right">Join anonymous</div>
+      </div>
+      <div class="modalContainer--modal-footer">Pixvie@2023</div>
     </div>
   </vue-final-modal>
 </template>
 
 <script setup>
-import { ref, defineEmits } from "vue";
-const emit = defineEmits(["successLogin"]);
+import { ref } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
+// const emit = defineEmits(["successLogin"]);
 
 const loginStatus = ref(true);
 const username = ref("");
 const email = ref("");
 const password = ref("");
 
-async function login() {
-  // make validation for username,email,password inputs
-
-  // create user object
+async function signin() {
+  //TODO: make validation for username,email,password inputs
   const user = {
-    username: username.value,
     email: email.value,
     password: password.value,
   };
-
-  // post user object to api
-  const res = await fetch("https://pixvie.tech/api/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
-  const data = await res.json();
-  if (res.status === 200) {
-    emit("successLogin", { success: true });
-  } else {
-    console.log(data);
-  }
+  store.dispatch("signin", user);
 }
-async function register() {
-  // make validation for username,email,password inputs
+async function signup() {
+  //TODO: make validation for username,email,password inputs
 
   // create user object
   const user = {
@@ -84,7 +65,6 @@ async function register() {
     password: password.value,
   };
 
-  // post user object to api
   const res = await fetch("https://pixvie.tech/api/auth/register", {
     method: "POST",
     headers: {
@@ -103,52 +83,106 @@ async function register() {
 </script>
 
 <style lang="scss" scoped>
-// Login Modal
-.modalContainer {
+::v-deep .modalWrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  width: 100vw;
 }
-.modal {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-}
-.modal-header {
-  margin-bottom: 10px;
-}
-.modal-body {
-  margin-bottom: 10px;
-  display: flex;
-}
-.modal-body-left {
-  display: flex;
-  flex-direction: column;
-}
-.modal-login {
-  display: flex;
-  flex-direction: column;
-  & > input {
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-  }
-}
-.modal-footer {
-  text-align: right;
+::v-deep .modalContent {
+  background-color: rgba(255, 255, 255, 1);
+  padding: 32px;
+  border-radius: 8px;
 }
 
-// Sign Up Modal
-.modal-signup {
-  display: flex;
-  flex-direction: column;
-  & > input {
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 8px;
+.modalContainer {
+  &--modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 32px;
+  }
+
+  &--modal-body {
+    display: flex;
+    padding: 8px;
+    &-left {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      margin-right: 12px;
+      & .activeSpan {
+        color: rgb(0, 153, 255);
+        &:hover {
+          cursor: pointer;
+        }
+      }
+      & > span {
+        font-size: 14px;
+      }
+    }
+    &-right {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+    }
+  }
+
+  &--modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 16px;
+    font-size: 14px;
+  }
+
+  .loginForm {
+    display: flex;
+    flex-direction: column;
+    & > input {
+      margin-bottom: 12px;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      border: 2px solid rgb(185, 185, 185);
+    }
+    & > button {
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      border: none;
+      background-color: rgb(0, 153, 255);
+      color: white;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  .registerForm {
+    display: flex;
+    flex-direction: column;
+    & > input {
+      margin-bottom: 12px;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      border: 2px solid rgb(185, 185, 185);
+    }
+    & > button {
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      border: none;
+      margin-bottom: 8px;
+      background-color: rgb(57, 197, 57);
+      color: white;
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 }
 </style>
