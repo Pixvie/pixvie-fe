@@ -1,10 +1,14 @@
 <template>
-  <div class="container" @onclick="store.dispatch('logout')">Merhaa</div>
+  <div class="container" @click="logout">Profile</div>
 </template>
 
 <script setup>
 import { useStore } from "vuex";
 const store = useStore();
+
+const logout = () => {
+  store.dispatch("logout");
+};
 </script>
 
 <style lang="scss" scoped>
