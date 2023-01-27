@@ -21,7 +21,6 @@ import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import panzoom from "panzoom";
 import io from "socket.io-client";
-import hostname from "../config.js";
 
 const store = useStore();
 const showModal = computed(() => !store.state.user.logged);
@@ -59,7 +58,9 @@ onMounted(async () => {
     zoomSpeed: 0.1,
   });
 
-  const data = await fetch(`${hostname}/board`).then((res) => res.json());
+  const data = await fetch(`${process.env.VUE_APP_API_SERVER}/board`).then(
+    (res) => res.json()
+  );
 
   for (let i = 0; i < 2000; i += 10) {
     for (let j = 0; j < 2000; j += 10) {

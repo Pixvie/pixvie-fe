@@ -34,7 +34,7 @@ export default createStore({
     async signin({ commit }, user) {
       try {
         const { data, status } = await axios.post(
-          "https://pixvie.tech/api/auth/signin",
+          `${process.env.VUE_APP_API_SERVER}/auth/signin`,
           user
         );
         if (status === 200) {
@@ -52,7 +52,7 @@ export default createStore({
     async signup({ commit }, user) {
       try {
         const { status } = await axios.post(
-          "https://pixvie.tech/api/auth/signup",
+          `${process.env.VUE_APP_API_SERVER}/auth/signup`,
           user
         );
         if (status === 201) {
@@ -70,7 +70,7 @@ export default createStore({
     async checkSession({ commit }) {
       try {
         const { data, status } = await axios.get(
-          "https://pixvie.tech/api/auth/profile"
+          `${process.env.VUE_APP_API_SERVER}/auth/profile`
         );
         if (status === 200) {
           commit("signin", data);
@@ -84,7 +84,7 @@ export default createStore({
     async logout({ commit }) {
       try {
         const { status } = await axios.get(
-          "https://pixvie.tech/api/auth/logout"
+          `${process.env.VUE_APP_API_SERVER}/auth/logout`
         );
         if (status === 200) {
           commit("logout", { username: null, id: null, logged: false });
