@@ -2,6 +2,7 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 COPY . .
+ENV VUE_APP_API_SERVER=$VUE_APP_API_SERVER
 RUN npm install && npm run lint && npm run build
 
 FROM nginx:1.23-alpine
