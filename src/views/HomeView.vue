@@ -16,6 +16,7 @@ import { useStore } from "vuex";
 const store = useStore();
 
 onMounted(() => {
+  console.log(process.env);
   store.dispatch("checkSession");
 });
 </script>
