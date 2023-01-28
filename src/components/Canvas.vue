@@ -4,7 +4,7 @@
     class="container"
     id="container"
     @mousedown="getCoords"
-    @mouseup="drawPixel(x, y, '#000')"
+    @mouseup="drawPixel(x, y, store.state.activeColor)"
   >
     <img
       src="../assets/selected-pixel.svg"

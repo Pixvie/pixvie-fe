@@ -10,12 +10,16 @@ export default createStore({
       logged: false,
     },
     loginModalStatus: true,
+    activeColor: "#000",
   },
   getters: {
     user: (state) => state.user,
     loginModalStatus: (state) => state.loginModalStatus,
   },
   mutations: {
+    changeActiveColor(state, payload) {
+      state.activeColor = payload;
+    },
     signin(state, payload) {
       state.user.logged = true;
       state.user.username = payload.username;
