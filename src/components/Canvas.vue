@@ -117,6 +117,7 @@ function makeItActive(x, y) {
 #canvas {
   border: 3px solid rgb(197, 197, 197);
   background-color: rgb(197, 197, 197);
+  image-rendering: pixelated;
 }
 
 img {
