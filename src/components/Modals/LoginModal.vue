@@ -31,7 +31,15 @@
             ></span
           >
         </div>
-        <div class="modalContainer--modal-body-right">Join anonymous</div>
+        <div class="modalContainer--modal-body-right">
+          <h2>Join anonymously</h2>
+          <input
+            type="text"
+            v-model="anonyUsername"
+            placeholder="Type username"
+          />
+          <button type="button" @click="anonysignin">Join</button>
+        </div>
       </div>
       <div class="modalContainer--modal-footer">Pixvie@2023</div>
     </div>
@@ -45,9 +53,18 @@ const store = useStore();
 // const emit = defineEmits(["successLogin"]);
 
 const loginStatus = computed(() => store.state.loginModalStatus);
+const anonyUsername = ref("");
 const username = ref("");
 const email = ref("");
 const password = ref("");
+
+async function anonysignin() {
+  const user = {
+    username: anonyUsername.value,
+    id: null,
+  };
+  store.dispatch("anonysignin", user);
+}
 
 async function signin() {
   //TODO: make validation for username,email,password inputs
@@ -113,7 +130,26 @@ async function signup() {
     &-right {
       display: flex;
       flex-direction: column;
+      gap: 12px;
       width: 50%;
+      & > input {
+        padding: 14px;
+        border-radius: 8px;
+        font-size: 14px;
+        border: 2px solid rgb(185, 185, 185);
+      }
+      & > button {
+        padding: 14px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: bold;
+        border: none;
+        background-color: rgb(0, 153, 255);
+        color: white;
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
   }
 

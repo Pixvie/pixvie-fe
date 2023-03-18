@@ -35,6 +35,9 @@ export default createStore({
     },
   },
   actions: {
+    async anonysignin({ commit }, user) {
+      commit("signin", user);
+    },
     async signin({ commit }, user) {
       try {
         const { data, status } = await axios.post(
