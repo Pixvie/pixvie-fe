@@ -36,9 +36,7 @@ const gotoEndOfChat = () => {
 
 const sendMessage = () => {
   const username = store.state.user.username;
-  const message = `<span style="${
-    username.includes("altay") ? "color: red" : ""
-  }" >${username}</span>: ${textInput.value}`;
+  const message = `${username}: ${textInput.value}`;
   textInput.value = "";
   socket.emit("CHAT_MESSAGE", message);
   gotoEndOfChat();
