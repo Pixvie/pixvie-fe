@@ -13,6 +13,7 @@
           v-model="textInput"
           type="text"
           placeholder="Write your message"
+          @keyup.enter="sendMessage"
         />
         <button @click="sendMessage" class="sendButton">Send</button>
       </div>
@@ -28,11 +29,19 @@ const store = useStore();
 const textInput = ref("");
 const chatMessages = ref([]);
 
+const gotoEndOfChat = () => {
+  const chatList = document.querySelector(".chatList");
+  chatList.scrollTop = chatList.scrollHeight;
+};
+
 const sendMessage = () => {
   const username = store.state.user.username;
-  const message = `${username}: ${textInput.value}`;
+  const message = `<span style="${
+    username.includes("altay") ? "color: red" : ""
+  }" >${username}</span>: ${textInput.value}`;
   textInput.value = "";
   socket.emit("CHAT_MESSAGE", message);
+  gotoEndOfChat();
 };
 
 onMounted(() => {
