@@ -2,7 +2,11 @@
   <div class="chatBox">
     <div class="chatContainer">
       <div class="chatList">
-        <ul></ul>
+        <ul>
+          <li v-for="(message, index) in chatMessages" :key="index">
+            {{ message }}
+          </li>
+        </ul>
       </div>
       <div class="chatButtons">
         <input
