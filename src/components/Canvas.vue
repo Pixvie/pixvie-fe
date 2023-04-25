@@ -12,25 +12,22 @@
       class="selected-item-img"
     />
   </div>
+  <Chat></Chat>
   <LoginModal v-model="showModal"></LoginModal>
 </template>
 
 <script setup>
 import LoginModal from "@/components/Modals/LoginModal.vue";
-import { ref, onMounted, computed } from "vue";
+import Chat from "@/components/Chat.vue";
+import { onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import panzoom from "panzoom";
-import io from "socket.io-client";
+import { socket } from "@/socket";
 
 const store = useStore();
 const showModal = computed(() => !store.state.user.logged);
-const socket = ref(null);
 onMounted(() => {
-  socket.value = io("https://pixvie.tech", {
-    path: "/api/socket.io/",
-    rejectUnauthorized: false,
-  }); //
-  socket.value.on("DRAWED_PIXEL", ({ x, y, color }) => {
+  socket.on("DRAWED_PIXEL", ({ x, y, color }) => {
     drawPixel(x, y, color, false);
   });
 });
@@ -92,7 +89,7 @@ async function drawPixel(x, y, color, flag = true) {
 
   ctx.fillStyle = color;
   ctx.fillRect(x, y, 9, 9);
-  if (flag) socket.value.emit("DRAW_PIXEL", { x, y, color });
+  if (flag) socket.emit("DRAW_PIXEL", { x, y, color });
 }
 
 function makeItActive(x, y) {
