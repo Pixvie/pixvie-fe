@@ -83,9 +83,7 @@ export default createStore({
           commit("signin", data);
         }
       } catch (error) {
-        toast.warn(error.response.data.message, {
-          position: toast.POSITION.BOTTOM_RIGHT,
-        });
+        console.log("Can't find active session");
       }
     },
     async logout({ commit }) {
