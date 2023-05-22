@@ -35,14 +35,34 @@ const gotoEndOfChat = () => {
 };
 
 const sendMessage = () => {
-  const username = store.state.user.username;
-  const message = `${username}: ${textInput.value}`;
+  const message = `${textInput.value}`;
+  const payload = { user: store.state.user, message };
   textInput.value = "";
-  socket.emit("CHAT_MESSAGE", message);
+  socket.emit("CHAT_MESSAGE", payload);
   gotoEndOfChat();
 };
 
 onMounted(() => {
+  socket.on("CLEAR_CHAT", () => {
+    chatMessages.value = [];
+  });
+
+  socket.on("WARN", (payload) => {
+    const { username, message } = payload;
+    const initPayload = { status: "CHAT_WARN", message };
+    if (store.state.user.username === username) {
+      socket.emit("HANDLE_MODERATION", initPayload);
+    }
+  });
+
+  socket.on("FORCE_DISCONNECT", (payload) => {
+    const username = payload;
+    const initPayload = { status: "SELF_DISCONNECT" };
+    if (store.state.user.username === username) {
+      socket.emit("HANDLE_MODERATION", initPayload);
+    }
+  });
+
   socket.on("SEND_MESSAGE", (data) => {
     chatMessages.value = [...chatMessages.value, data];
   });
