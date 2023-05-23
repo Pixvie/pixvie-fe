@@ -12,13 +12,11 @@
       class="selected-item-img"
     />
   </div>
-  <Chat></Chat>
   <LoginModal v-model="showModal"></LoginModal>
 </template>
 
 <script setup>
 import LoginModal from "@/components/Modals/LoginModal.vue";
-import Chat from "@/components/Chat.vue";
 import { onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import panzoom from "panzoom";
@@ -42,6 +40,11 @@ onMounted(async () => {
     boundsPadding: 0.1,
     zoomDoubleClickSpeed: 1,
     zoomSpeed: 0.1,
+    beforeWheel: function (e) {
+      // allow mouse-down panning only if shiftKey is down. Otherwise - ignore
+      var shouldIgnore = !e.shiftKey;
+      return shouldIgnore;
+    },
   });
 
   const el2 = document.querySelector("#container");
@@ -53,6 +56,11 @@ onMounted(async () => {
     boundsPadding: 0.1,
     zoomDoubleClickSpeed: 1,
     zoomSpeed: 0.1,
+    beforeWheel: function (e) {
+      // allow mouse-down panning only if shiftKey is down. Otherwise - ignore
+      var shouldIgnore = !e.shiftKey;
+      return shouldIgnore;
+    },
   });
 
   const data = await fetch(`${process.env.VUE_APP_API_SERVER}/board`).then(
@@ -109,12 +117,14 @@ function makeItActive(x, y) {
   left: 0;
   width: 2000px;
   height: 2000px;
+  overflow-y: hidden !important;
 }
 
 #canvas {
   border: 3px solid rgb(197, 197, 197);
   background-color: rgb(197, 197, 197);
   image-rendering: pixelated;
+  overflow-y: hidden !important;
 }
 
 img {

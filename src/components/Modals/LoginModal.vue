@@ -1,6 +1,7 @@
 <template>
   <vue-final-modal
     :click-to-close="false"
+    :lock-scroll="false"
     :ssr="false"
     classes="modalWrapper"
     content-class="modalContent"
