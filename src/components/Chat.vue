@@ -108,6 +108,7 @@ onMounted(() => {
   & .chatButtons {
     display: flex;
     width: 100%;
+    margin-top: 10px;
     & .sendButton {
       background-color: #000;
       color: #fff;

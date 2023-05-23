@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @click="logout">Profile</div>
+  <div class="container" @click="logout">Logout</div>
 </template>
 
 <script setup>

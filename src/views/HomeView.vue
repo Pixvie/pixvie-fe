@@ -3,6 +3,7 @@
     <Logo />
     <Canvas />
     <Profile v-if="store.state.user.logged" />
+    <Chat />
     <Colorpicker />
   </div>
 </template>
@@ -12,6 +13,7 @@ import Canvas from "@/components/Canvas.vue";
 import Logo from "@/components/Logo.vue";
 import Profile from "@/components/Profile.vue";
 import Colorpicker from "@/components/Colorpicker.vue";
+import Chat from "@/components/Chat.vue";
 
 import { onMounted } from "@vue/runtime-core";
 
