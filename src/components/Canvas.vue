@@ -4,7 +4,7 @@
     class="container"
     id="container"
     @mousedown="getCoords"
-    @mouseup="drawPixel(x, y, store.state.activeColor)"
+    @click="drawPixel(x, y, store.state.activeColor)"
   >
     <img
       src="../assets/selected-pixel.svg"
@@ -40,16 +40,6 @@ onMounted(async () => {
     boundsPadding: 0.1,
     zoomDoubleClickSpeed: 1,
     zoomSpeed: 0.1,
-    beforeWheel: function (e) {
-      // allow mouse-down panning only if shiftKey is down. Otherwise - ignore
-      var shouldIgnore = !e.shiftKey;
-      return shouldIgnore;
-    },
-    beforeMouseDown: function (e) {
-      // allow mouse-down panning only if altKey is down. Otherwise - ignore
-      var shouldIgnore = !e.altKey;
-      return shouldIgnore;
-    },
   });
 
   const el2 = document.querySelector("#container");
@@ -61,16 +51,6 @@ onMounted(async () => {
     boundsPadding: 0.1,
     zoomDoubleClickSpeed: 1,
     zoomSpeed: 0.1,
-    beforeWheel: function (e) {
-      // allow mouse-down panning only if shiftKey is down. Otherwise - ignore
-      var shouldIgnore = !e.shiftKey;
-      return shouldIgnore;
-    },
-    beforeMouseDown: function (e) {
-      // allow mouse-down panning only if altKey is down. Otherwise - ignore
-      var shouldIgnore = !e.altKey;
-      return shouldIgnore;
-    },
   });
 
   const data = await fetch(`${process.env.VUE_APP_API_SERVER}/board`).then(
