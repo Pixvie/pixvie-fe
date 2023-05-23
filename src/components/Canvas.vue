@@ -45,6 +45,11 @@ onMounted(async () => {
       var shouldIgnore = !e.shiftKey;
       return shouldIgnore;
     },
+    beforeMouseDown: function (e) {
+      // allow mouse-down panning only if altKey is down. Otherwise - ignore
+      var shouldIgnore = !e.altKey;
+      return shouldIgnore;
+    },
   });
 
   const el2 = document.querySelector("#container");
@@ -59,6 +64,11 @@ onMounted(async () => {
     beforeWheel: function (e) {
       // allow mouse-down panning only if shiftKey is down. Otherwise - ignore
       var shouldIgnore = !e.shiftKey;
+      return shouldIgnore;
+    },
+    beforeMouseDown: function (e) {
+      // allow mouse-down panning only if altKey is down. Otherwise - ignore
+      var shouldIgnore = !e.altKey;
       return shouldIgnore;
     },
   });
