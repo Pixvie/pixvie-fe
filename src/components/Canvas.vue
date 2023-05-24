@@ -40,6 +40,11 @@ onMounted(async () => {
     boundsPadding: 0.1,
     zoomDoubleClickSpeed: 1,
     zoomSpeed: 0.1,
+    beforeWheel: function (e) {
+      let wheelStatus = e.target.id === "home" || e.target.id === "container";
+
+      return !wheelStatus;
+    },
   });
 
   const el2 = document.querySelector("#container");
@@ -51,6 +56,11 @@ onMounted(async () => {
     boundsPadding: 0.1,
     zoomDoubleClickSpeed: 1,
     zoomSpeed: 0.1,
+    beforeWheel: function (e) {
+      let wheelStatus = e.target.id === "home" || e.target.id === "container";
+
+      return !wheelStatus;
+    },
   });
 
   const data = await fetch(`${process.env.VUE_APP_API_SERVER}/board`).then(
