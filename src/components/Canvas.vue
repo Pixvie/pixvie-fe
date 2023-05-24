@@ -33,12 +33,10 @@ onMounted(() => {
 onMounted(async () => {
   const el = document.querySelector("#canvas");
   panzoom(el, {
-    maxZoom: 3,
-    minZoom: 0.8,
-    smoothScroll: true,
+    maxZoom: 5,
+    minZoom: 0.2,
     bounds: true,
     boundsPadding: 0.1,
-    zoomDoubleClickSpeed: 1,
     zoomSpeed: 0.1,
     beforeWheel: function (e) {
       let wheelStatus = e.target.id === "home" || e.target.id === "container";
@@ -49,12 +47,10 @@ onMounted(async () => {
 
   const el2 = document.querySelector("#container");
   panzoom(el2, {
-    maxZoom: 3,
-    minZoom: 0.8,
-    smoothScroll: true,
+    maxZoom: 5,
+    minZoom: 0.2,
     bounds: true,
     boundsPadding: 0.1,
-    zoomDoubleClickSpeed: 1,
     zoomSpeed: 0.1,
     beforeWheel: function (e) {
       let wheelStatus = e.target.id === "home" || e.target.id === "container";
