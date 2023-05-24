@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import { toast } from "vue3-toastify";
 import axios from "axios";
+import { socket } from "@/socket";
 
 export default createStore({
   state: {
@@ -24,6 +25,13 @@ export default createStore({
       state.user.logged = true;
       state.user.username = payload.username;
       state.user.id = payload.id;
+      socket.io.opts.query = {
+        user: JSON.stringify({
+          username: payload.username,
+          id: payload.id,
+        }),
+      };
+      socket.connect();
     },
     changeModalStatus(state) {
       state.loginModalStatus = !state.loginModalStatus;

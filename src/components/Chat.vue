@@ -67,6 +67,10 @@ onMounted(() => {
   socket.on("SEND_MESSAGE", (data) => {
     chatMessages.value = [...chatMessages.value, data];
   });
+
+  socket.on("LIST_PLAYER", (data) => {
+    console.table(data);
+  });
 });
 </script>
 
