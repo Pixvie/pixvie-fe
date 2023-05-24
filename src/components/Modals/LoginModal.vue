@@ -51,7 +51,6 @@
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
-// const emit = defineEmits(["successLogin"]);
 
 const loginStatus = computed(() => store.state.loginModalStatus);
 const anonyUsername = ref("");

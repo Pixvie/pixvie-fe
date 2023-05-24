@@ -72,6 +72,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .chatBox {
   position: absolute;
+  opacity: 0.4;
   margin: 12px;
   border-radius: 12px;
   bottom: 0;
@@ -79,7 +80,11 @@ onMounted(() => {
   box-shadow: 0 0 20px 8px rgba($color: #000000, $alpha: 0.4);
   width: 448px;
   height: 300px;
+  transition: all 0.25s;
   background-color: #fff;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .chatContainer {

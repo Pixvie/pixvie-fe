@@ -87,7 +87,13 @@ async function drawPixel(x, y, color, flag = true) {
 
   ctx.fillStyle = color;
   ctx.fillRect(x, y, 9, 9);
-  if (flag) socket.emit("DRAW_PIXEL", { x, y, color });
+  if (flag)
+    socket.emit("DRAW_PIXEL", {
+      x,
+      y,
+      color,
+      username: store.state.user.username,
+    });
 }
 
 function makeItActive(x, y) {

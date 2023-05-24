@@ -36,7 +36,13 @@ export default createStore({
   },
   actions: {
     async anonysignin({ commit }, user) {
-      commit("signin", user);
+      if (user.username.trim().length < 5) {
+        toast.warn("You have to pick a username minimum 5 characters.", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+      } else {
+        commit("signin", user);
+      }
     },
     async signin({ commit }, user) {
       try {
