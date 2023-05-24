@@ -4,7 +4,7 @@
       <div class="chatList">
         <ul>
           <li v-for="(message, index) in chatMessages" :key="index">
-            {{ message }}
+            <ChatItem :messageDetail="message" />
           </li>
         </ul>
       </div>
@@ -22,6 +22,7 @@
 </template>
 
 <script setup>
+import ChatItem from "@/components/ChatItem.vue";
 import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import { socket } from "@/socket";
