@@ -32,11 +32,11 @@ const store = useStore();
 const colorList = ref([
   "#000",
   "#fff",
-  "#f44336",
-  "#e91e63",
-  "#9c27b0",
-  "#673ab7",
-  "#3f51b5",
+  "#FF0000",
+  "#FFFF00",
+  "#3EFF00",
+  "#009BFF",
+  "#FF00E0",
 ]);
 
 const changeColorPicker = (e) => {
