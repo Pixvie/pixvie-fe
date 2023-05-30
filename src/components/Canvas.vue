@@ -120,6 +120,7 @@ function makeItActive(x, y) {
   width: 2000px;
   height: 2000px;
   overflow-y: hidden !important;
+  box-shadow: 0px 0px 32px 16px #888888;
 }
 
 #canvas {
