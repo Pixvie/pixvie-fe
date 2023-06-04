@@ -8,7 +8,7 @@
     class="container"
     id="container"
     @mousedown="getCoords"
-    @mouseup="drawPixel(x, y, '#000')"
+    @click="drawPixel(x, y, store.state.activeColor)"
   >
     <img
       src="../assets/selected-pixel.svg"
@@ -16,22 +16,34 @@
       class="selected-item-img"
     />
   </div>
+  <LoginModal v-model="showModal"></LoginModal>
 </template>
 
 <script setup>
+import LoginModal from "@/components/Modals/LoginModal.vue";
+import { onMounted, computed } from "vue";
+import { useStore } from "vuex";
 import panzoom from "panzoom";
+<<<<<<< HEAD
 import { ref, onMounted } from "vue";
 import io from "socket.io-client";
 import hostname from "../config.js";
+=======
+import { socket } from "@/socket";
+>>>>>>> main
 
-const socket = ref(null);
-// import PixelsContainer from "@/components/PixelsContainer.vue";
+const store = useStore();
+const showModal = computed(() => !store.state.user.logged);
 onMounted(() => {
+<<<<<<< HEAD
   socket.value = io("https://pixvie.tech", {
     path: "/app/socket.io/",
     rejectUnauthorized: false,
   }); //
   socket.value.on("DRAWED_PIXEL", ({ x, y, color }) => {
+=======
+  socket.on("DRAWED_PIXEL", ({ x, y, color }) => {
+>>>>>>> main
     drawPixel(x, y, color, false);
   });
 });
@@ -39,27 +51,39 @@ onMounted(() => {
 onMounted(async () => {
   const el = document.querySelector("#canvas");
   panzoom(el, {
-    maxZoom: 3,
-    minZoom: 0.8,
-    smoothScroll: true,
+    maxZoom: 5,
+    minZoom: 0.2,
     bounds: true,
     boundsPadding: 0.1,
-    zoomDoubleClickSpeed: 1,
     zoomSpeed: 0.1,
+    beforeWheel: function (e) {
+      let wheelStatus = e.target.id === "home" || e.target.id === "container";
+
+      return !wheelStatus;
+    },
   });
 
   const el2 = document.querySelector("#container");
   panzoom(el2, {
-    maxZoom: 3,
-    minZoom: 0.8,
-    smoothScroll: true,
+    maxZoom: 5,
+    minZoom: 0.2,
     bounds: true,
     boundsPadding: 0.1,
-    zoomDoubleClickSpeed: 1,
     zoomSpeed: 0.1,
+    beforeWheel: function (e) {
+      let wheelStatus = e.target.id === "home" || e.target.id === "container";
+
+      return !wheelStatus;
+    },
   });
 
+<<<<<<< HEAD
   const data = await fetch(`${hostname}/api/board`).then((res) => res.json());
+=======
+  const data = await fetch(`${process.env.VUE_APP_API_SERVER}/board`).then(
+    (res) => res.json()
+  );
+>>>>>>> main
 
   for (let i = 0; i < 2000; i += 10) {
     for (let j = 0; j < 2000; j += 10) {
@@ -80,11 +104,10 @@ function getCoords(e) {
   y = e.offsetY;
   x = Math.round((x - 10) / 10) * 10;
   y = Math.round((y - 10) / 10) * 10;
-  var coors = "Coordinates: (" + x + "," + y + ")";
-  console.log(coors);
+  // var coors = "Coordinates: (" + x + "," + y + ")";
+  // console.log(coors);
   makeItActive(x, y);
 }
-
 // Draw a pixel on canvas
 async function drawPixel(x, y, color, flag = true) {
   const ctx = document.getElementById("canvas").getContext("2d");
@@ -92,7 +115,13 @@ async function drawPixel(x, y, color, flag = true) {
 
   ctx.fillStyle = color;
   ctx.fillRect(x, y, 9, 9);
-  if (flag) socket.value.emit("DRAW_PIXEL", { x, y, color });
+  if (flag)
+    socket.emit("DRAW_PIXEL", {
+      x,
+      y,
+      color,
+      username: store.state.user.username,
+    });
 }
 
 function makeItActive(x, y) {
@@ -112,11 +141,15 @@ function makeItActive(x, y) {
   left: 0;
   width: 2000px;
   height: 2000px;
+  overflow-y: hidden !important;
+  box-shadow: 0px 0px 32px 16px #888888;
 }
 
 #canvas {
   border: 3px solid rgb(197, 197, 197);
   background-color: rgb(197, 197, 197);
+  image-rendering: pixelated;
+  overflow-y: hidden !important;
 }
 
 img {

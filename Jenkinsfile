@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'Build.'
                 sh 'docker rm pixvie-frontend --force'
-                sh 'docker build -t pixvie-fe .'
+                sh 'docker build --build-arg VUE_APP_API_SERVER=$VUE_APP_API_SERVER --build-arg VUE_APP_SOCKET_SERVER=$VUE_APP_SOCKET_SERVER -t pixvie-fe .'
                 sh 'docker run --name pixvie-frontend -d -p 80:80 pixvie-fe'
                 
             }
