@@ -19,3 +19,8 @@ spec:
                   image: emrullahcirit/pixvie-fe:latest
                   ports:
                       - containerPort: 80
+                  env: 
+                  - name: VUE_APP_API_SERVER
+                    value: http://35.198.166.105:3000
+                  - name: VUE_APP_SOCKET_SERVER 
+                    value: http://35.198.166.105:3000/socket
