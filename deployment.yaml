@@ -19,9 +19,3 @@ spec:
                   image: emrullahcirit/pixvie-fe:latest
                   ports:
                       - containerPort: 80
-                  env:
-                      - name: VUE_APP_BASE_HOST
-                        valueFrom:
-                            secretKeyRef:
-                                name: fe-secret
-                                key: VUE_APP_BASE_HOST
