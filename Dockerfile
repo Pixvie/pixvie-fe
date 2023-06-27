@@ -12,6 +12,3 @@ WORKDIR /app
 
 COPY --from=builder /app/dist /app/dist
 COPY --from=builder /app/default.conf /etc/nginx/conf.d/
-
-
-

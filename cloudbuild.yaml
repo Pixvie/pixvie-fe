@@ -1,0 +1,5 @@
+steps:
+- name: 'docker'
+  args: ['build', '--build-arg', 'VUE_APP_API_SERVER=https://api.pixvie.tech', '--build-arg', 'VUE_APP_SOCKET_SERVER=https://api.pixvie.tech', '-t', 'eu.gcr.io/$PROJECT_ID/pixvie-fe', '.']
+images:
+- 'eu.gcr.io/$PROJECT_ID/pixvie-fe'
