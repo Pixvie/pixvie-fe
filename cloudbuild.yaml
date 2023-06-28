@@ -9,8 +9,10 @@ steps:
   args:
   - run
   - --filename=deployment.yaml
+  - --location=europe-west3
+  - --cluster=emrullah-cluster-1
+  - run
   - --filename=service.yaml
   - --location=europe-west3
-  - --image=eu.gcr.io/$PROJECT_ID/pixvie-fe
   - --cluster=emrullah-cluster-1
   dir: "pixvie-k8s-infra/apps/pixvie-fe"
