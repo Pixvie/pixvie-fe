@@ -1,5 +1,14 @@
 steps:
-- name: 'docker'
+- name: 'build image'
   args: ['build', '--build-arg', 'VUE_APP_API_SERVER=https://api.pixvie.tech', '--build-arg', 'VUE_APP_SOCKET_SERVER=https://api.pixvie.tech', '-t', 'eu.gcr.io/$PROJECT_ID/pixvie-fe', '.']
-images:
-- 'eu.gcr.io/$PROJECT_ID/pixvie-fe'
+- name: 'push image'
+  args: ['push', 'eu.gcr.io/$PROJECT_ID/pixvie-fe']
+- name: 'clone infra'
+  args: ['clone', 'https://github.com/Pixvie/pixvie-k8s-infra.git']
+- name: 'deploy app'
+  args:
+  - run
+  - --filename=deployment.yaml
+  - --location=europe-west3
+  - --cluster=emrullah-cluster-1
+  dir: "pixvie-k8s-infra/apps/pixvie-fe"
