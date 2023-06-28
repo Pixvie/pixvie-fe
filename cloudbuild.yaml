@@ -12,10 +12,3 @@ steps:
   - --location=europe-west3
   - --cluster=emrullah-cluster-1
   dir: "pixvie-k8s-infra/apps/pixvie-fe"
-- name: "gcr.io/cloud-builders/gke-deploy"
-  args:
-  - run
-  - --filename=service.yaml
-  - --location=europe-west3
-  - --cluster=emrullah-cluster-1
-  dir: "pixvie-k8s-infra/apps/pixvie-fe"
